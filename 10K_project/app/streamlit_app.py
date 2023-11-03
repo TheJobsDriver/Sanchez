@@ -7,7 +7,9 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from htmlTemplates import bot_template, user_template, css
-import config, os
+import os, sys
+sys.path.append('..')
+import config
 
 os.environ['ORG_ID'] = config.ORG_ID
 
@@ -105,23 +107,17 @@ def main():
         st.subheader("Upload your Documents Here: ")
         pdf_files = st.file_uploader("Choose your PDF Files and Press OK", type=['pdf'], accept_multiple_files=True)
 
-        if st.button("OK"):
+        if st.button("OK") and open_IA_key:
             with st.spinner("Processing your PDFs..."):
-
                 # Get PDF Text
                 raw_text = get_pdf_text(pdf_files)
 
                 # Get Text Chunks
                 text_chunks = get_chunk_text(raw_text)
-                
-
                 # Create Vector Store
-                
                 vector_store = get_vector_store(text_chunks)
                 st.write("DONE")
-
                 # Create conversation chain
-
                 st.session_state.conversation =  get_conversation_chain(vector_store)
 
 
