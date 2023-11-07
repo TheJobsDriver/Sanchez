@@ -44,7 +44,7 @@ def get_vector_store(text_chunks):
     
     # For Huggingface Embeddings
 
-    embeddings = HuggingFaceEmbeddings()
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
     # vectorstore = FAISS.from_texts(texts = text_chunks, embedding = embeddings)
     vectorstore = Chroma.from_texts(text_chunks, embeddings)
