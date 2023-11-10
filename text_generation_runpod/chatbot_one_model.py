@@ -1,19 +1,19 @@
 import gradio as gr
 import requests
 
-server = ''
-model_name_wizard = 'WizardLM-70B-V1.2'
+server = 'https://o2r0iu1g13robz-80.proxy.runpod.net'
+model_name_wizard = 'WizardLM-33B-V1.0-Uncensored'
 
-default_prompt = "A chat between a curious user and an artificial intelligence assistant. \
-The assistant gives helpful, detailed, and polite answers to the user's \
-questions."
+default_prompt = "You are a helpful AI assistant."
 
-def generate_prompt(prompt: str, default_prompt: str = default_prompt) -> str:
-    prompt = f"""
-        {default_prompt} USER: {prompt} ASSISTANT: </s>
-        """.strip()
+def generate_prompt(prompt):
+    return  f"""
+You are a helpful AI assistant.
 
-    return prompt
+USER: {prompt}
+ASSISTANT:
+
+""".strip()
 
 def make_request(prompt:str, temperature: int, max_new_tokens: int): 
     data = {
@@ -28,7 +28,7 @@ def make_request(prompt:str, temperature: int, max_new_tokens: int):
 
 
 def chatbot_response(message, history, temperature, max_new_tokens, system_prompt):
-    prompt = generate_prompt(message, system_prompt)
+    prompt = generate_prompt(message)
     response = make_request(prompt, temperature, max_new_tokens)
     return response
 

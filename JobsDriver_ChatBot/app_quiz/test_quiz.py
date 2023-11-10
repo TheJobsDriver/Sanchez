@@ -1,33 +1,10 @@
 import smtplib
 from email.message import EmailMessage
-
-class Quiz:
-    def __init__(self, questions):
-        self.questions = questions
-        self.score = 0
-    
-    def ask_question(self, question):
-        print("\n" + question["question"])
-        for i, choice in enumerate(question["choices"]):
-            print(f"{i + 1}: {choice}")
-        response = input("Enter the number of your choice: ")
-        if int(response) - 1 == question["answer"]:
-            return True
-        else:
-            return False
-    
-    def start(self):
-        for question in self.questions:
-            if self.ask_question(question):
-                print("Correct!")
-                self.score += 1
-            else:
-                print("Incorrect.")
-        print(f"\nYour final score is {self.score}/{len(self.questions)}")
+import streamlit as st
 
 def send_email(name, score, receiver):
-    sender = 'jesussanchezd@hotmail.es'  # Replace with your actual email
-    password = 'Jesu2123456!'  # This should be handled securely
+    sender = 'thejobsdriver@outlook.com'  # Replace with your actual email
+    password = st.secrets["EMAIL_PASSWORD"]   # This should be handled securely
     smtp_server = 'smtp-mail.outlook.com'
     smtp_port = 587  # Replace with your SMTP port
     
@@ -102,8 +79,7 @@ questions = [
         "answer": "Number of potential hires"
     }
 ]
-
+# test send email
 # name = input("Please enter your name: ")
-# quiz = Quiz(questions)
-# final_score = quiz.start()
-#send_email('jesus', 2, 'jesussanchezd@hotmail.es')
+# response = send_email('jesus', 2, 'jesussanchezd@hotmail.es')
+# print(response)
